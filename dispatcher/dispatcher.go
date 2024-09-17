@@ -32,7 +32,7 @@ func NewFrom[ID comparable, E any](
 	listenerMap listener.Map[ID, E],
 ) EventDispatcher[ID, E] {
 
-	matcherBuilder := NewMatcherBuilder[ID, E]()
+	matcherBuilder := newMatcherBuilder[ID, E]()
 	for _, currentGlobalListener := range globalListeners {
 		matcherBuilder.AddGlobalListener(currentGlobalListener)
 	}

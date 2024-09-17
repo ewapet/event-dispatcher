@@ -5,23 +5,23 @@ import (
 	"maps"
 )
 
-type MatcherBuilder[ID comparable, E any] struct {
+type matcherBuilder[ID comparable, E any] struct {
 	eventTypeListenerMap map[ID][]listener.Listener[ID, E]
 	globalListeners      []listener.Listener[ID, E]
 }
 
-func NewMatcherBuilder[ID comparable, E any]() *MatcherBuilder[ID, E] {
-	return &MatcherBuilder[ID, E]{
+func newMatcherBuilder[ID comparable, E any]() *matcherBuilder[ID, E] {
+	return &matcherBuilder[ID, E]{
 		eventTypeListenerMap: make(map[ID][]listener.Listener[ID, E]),
 		globalListeners:      make([]listener.Listener[ID, E], 0),
 	}
 }
 
-func (l *MatcherBuilder[ID, E]) AddGlobalListener(listenerToAdd listener.Listener[ID, E]) {
+func (l *matcherBuilder[ID, E]) AddGlobalListener(listenerToAdd listener.Listener[ID, E]) {
 	l.globalListeners = append(l.globalListeners, listenerToAdd)
 }
 
-func (l *MatcherBuilder[ID, E]) AddListener(eventIDs []ID, listenerToAdd listener.Listener[ID, E]) {
+func (l *matcherBuilder[ID, E]) AddListener(eventIDs []ID, listenerToAdd listener.Listener[ID, E]) {
 	if len(eventIDs) == 0 {
 		panic("invalid list of event types provided - is empty")
 	}
@@ -33,7 +33,7 @@ func (l *MatcherBuilder[ID, E]) AddListener(eventIDs []ID, listenerToAdd listene
 	}
 }
 
-func (l *MatcherBuilder[ID, E]) Build() Matcher[ID, E] {
+func (l *matcherBuilder[ID, E]) Build() Matcher[ID, E] {
 	listenerMapCopy := make(map[ID][]listener.Listener[ID, E])
 	maps.Copy(listenerMapCopy, l.eventTypeListenerMap)
 
