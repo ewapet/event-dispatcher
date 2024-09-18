@@ -4,23 +4,21 @@
 
 A simple, versatile, and generic event-dispatcher implementation. 
 
-**Example:** Creating a global listener that accepts all incoming events and outputs their values.
+### Goals
+
+1) **Dispatch Anything** - the library doesn't dictate what your events look like. Only that they're consistent. Or type 'any'
+1) **Extensible** - Inject custom dispatching logic to suit your own needs, whether deterministic or non-deterministic.
+
 ```go
-// Creates a new dispatcher of generic type EventDispatcher[string, []rune]
+// Type: EventDispatcher[string, []rune]
 myDispatcher := dispatcher.NewFromFunc(func(eventID string, eventData []rune) {
 
     fmt.Printf("You dispatched event ID %s with data %v", eventID, eventData)
 
 })
 
-// Dispatches an event ID and it's associated data.
 myDispatcher.Dispatch("event.message", []rune("Hello World"))
 ```
-
-### Goals
-
-1) **Dispatch Anything** - the library does not dictate what your events should look like. Only that they're of a consistent type.
-1) **Extensible** - Inject custom dispatching logic to suit your own needs, whether deterministic or non-deterministic.
 
 ## Usage
 
@@ -53,7 +51,7 @@ broadcaster := dispatcher.NewFromFunc(func(eventID string, eventData string) {
     fmt.Println("Hello!")
 })
 
-broadcaster.Dispatch(any.thing)
+broadcaster.Dispatch("any.thing")
 ```
 
 **Example**: Creating a dispatcher with multiple global closure listeners.
